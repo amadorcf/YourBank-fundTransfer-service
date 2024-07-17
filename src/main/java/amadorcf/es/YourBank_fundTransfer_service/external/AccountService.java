@@ -1,7 +1,7 @@
 package amadorcf.es.YourBank_fundTransfer_service.external;
 
 import amadorcf.es.YourBank_fundTransfer_service.config.FeignClientConfiguration;
-import amadorcf.es.YourBank_fundTransfer_service.model.dto.external.Account;
+import amadorcf.es.YourBank_fundTransfer_service.model.entity.external.Account;
 import amadorcf.es.YourBank_fundTransfer_service.model.dto.response.Response;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

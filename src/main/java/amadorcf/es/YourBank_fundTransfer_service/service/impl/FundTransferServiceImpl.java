@@ -5,13 +5,15 @@ import amadorcf.es.YourBank_fundTransfer_service.exception.GlobalErrorCode;
 import amadorcf.es.YourBank_fundTransfer_service.exception.InsufficientBalance;
 import amadorcf.es.YourBank_fundTransfer_service.exception.ResourceNotFound;
 import amadorcf.es.YourBank_fundTransfer_service.external.AccountService;
+import amadorcf.es.YourBank_fundTransfer_service.external.TransactionService;
 import amadorcf.es.YourBank_fundTransfer_service.model.TransactionStatus;
 import amadorcf.es.YourBank_fundTransfer_service.model.TransferType;
 import amadorcf.es.YourBank_fundTransfer_service.model.dto.FundTransferDto;
-import amadorcf.es.YourBank_fundTransfer_service.model.dto.external.Account;
+import amadorcf.es.YourBank_fundTransfer_service.model.entity.external.Account;
 import amadorcf.es.YourBank_fundTransfer_service.model.dto.request.FundTransferRequest;
 import amadorcf.es.YourBank_fundTransfer_service.model.dto.response.FundTransferResponse;
 import amadorcf.es.YourBank_fundTransfer_service.model.entity.FundTransfer;
+import amadorcf.es.YourBank_fundTransfer_service.model.entity.external.Transaction;
 import amadorcf.es.YourBank_fundTransfer_service.model.mapper.FundTransferMapper;
 import amadorcf.es.YourBank_fundTransfer_service.repository.FundTransferRepository;
 import amadorcf.es.YourBank_fundTransfer_service.service.FundTransferService;
@@ -20,23 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.training.fundtransfer.exception.AccountUpdateException;
-import org.training.fundtransfer.exception.GlobalErrorCode;
-import org.training.fundtransfer.exception.InsufficientBalance;
-import org.training.fundtransfer.exception.ResourceNotFound;
-import org.training.fundtransfer.external.AccountService;
-import org.training.fundtransfer.external.TransactionService;
-import org.training.fundtransfer.model.mapper.FundTransferMapper;
-import org.training.fundtransfer.model.TransactionStatus;
-import org.training.fundtransfer.model.TransferType;
-import org.training.fundtransfer.model.dto.Account;
-import org.training.fundtransfer.model.dto.FundTransferDto;
-import org.training.fundtransfer.model.dto.Transaction;
-import org.training.fundtransfer.model.dto.request.FundTransferRequest;
-import org.training.fundtransfer.model.dto.response.FundTransferResponse;
-import org.training.fundtransfer.model.entity.FundTransfer;
-import org.training.fundtransfer.repository.FundTransferRepository;
-import org.training.fundtransfer.service.FundTransferService;
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,8 +36,7 @@ public class FundTransferServiceImpl implements FundTransferService {
 
     private final AccountService accountService;
     private final FundTransferRepository fundTransferRepository;
-    //TODO Implementar esta parte al crear microservicio TransactionService
-    // private final TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @Value("${spring.application.ok}")
     private String ok;
@@ -115,8 +100,8 @@ public class FundTransferServiceImpl implements FundTransferService {
      * @param amount The amount of funds to transfer.
      * @return The transaction reference number.
      */
-    //TODO Implementar esta parte al crear microservicio TransactionService
-/*    private String internalTransfer(Account fromAccount, Account toAccount, BigDecimal amount) {
+
+    private String internalTransfer(Account fromAccount, Account toAccount, BigDecimal amount) {
 
         fromAccount.setAvailableBalance(fromAccount.getAvailableBalance().subtract(amount));
         accountService.updateAccount(fromAccount.getAccountNumber(), fromAccount);
@@ -140,7 +125,7 @@ public class FundTransferServiceImpl implements FundTransferService {
         String transactionReference = UUID.randomUUID().toString();
         transactionService.makeInternalTransactions(transactions, transactionReference);
         return transactionReference;
-    }*/
+    }
 
     /**
      * Retrieves the details of a fund transfer based on the given reference ID.

@@ -1,4 +1,4 @@
-package amadorcf.es.YourBank_fundTransfer_service.model.dto.external;
+package amadorcf.es.YourBank_fundTransfer_service.model.entity.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
